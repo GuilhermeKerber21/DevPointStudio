@@ -1,0 +1,13 @@
+{
+  "name": "dev_point_studio",
+  "version": "1.0.0",
+  "description": "Website institucional da Dev Point Studio — HTML, CSS e JavaScript vanilla.",
+  "private": true,
+  "scripts": {
+    "dev": "serve . -p 3000",
+    "start": "serve . -p 3000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

@@ -1,0 +1,154 @@
+/* =====================================================
+   DEV POINT STUDIO — responsive.css
+   Adaptações para tablet e mobile.
+   Breakpoints: 1024px (tablet), 720px (mobile).
+   ===================================================== */
+
+/* ----------  Tablet  ---------- */
+@media (max-width: 1024px) {
+  :root {
+    --space_xl: 5rem;
+  }
+
+  .services_grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about_body {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .projects_layout {
+    grid-template-columns: 1fr;
+  }
+  .project_preview {
+    position: static;
+    max-width: 420px;
+    margin-inline: auto;
+    order: -1;
+  }
+
+  .why_layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .why_intro {
+    position: static;
+  }
+}
+
+/* ----------  Mobile  ---------- */
+@media (max-width: 720px) {
+  :root {
+    --container_pad: 1.25rem;
+    --space_xl: 4rem;
+  }
+
+  /* Navegação mobile: menu em painel deslizante */
+  .menu_toggle {
+    display: flex;
+    z-index: 110;
+  }
+  .main_nav {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(80vw, 320px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+    background: var(--color_bg_soft);
+    border-left: 1px solid var(--color_border);
+    transform: translateX(100%);
+    transition: transform var(--speed_base) var(--ease_out);
+  }
+  .main_nav.is_open {
+    transform: translateX(0);
+  }
+  .nav_list {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .nav_list a {
+    font-size: 1.15rem;
+  }
+  .nav_cta {
+    width: 100%;
+  }
+  body.menu_open {
+    overflow: hidden;
+  }
+
+  /* Hero */
+  .hero_actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero_orbit {
+    width: 320px;
+    height: 320px;
+    top: 4%;
+    right: -30%;
+  }
+
+  /* Services: uma coluna */
+  .services_grid {
+    grid-template-columns: 1fr;
+  }
+  .services_header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Projects */
+  .project_arrow {
+    display: none;
+  }
+  .project_category {
+    display: block;
+    margin-left: 0;
+  }
+  .project_item {
+    flex-wrap: wrap;
+  }
+
+  /* Process: timeline vertical simplificada */
+  .process_step {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding-left: 2rem;
+  }
+  .step_text {
+    align-self: start;
+  }
+
+  /* Team: uma coluna */
+  .team_grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Vision */
+  .vision_item {
+    gap: 1.25rem;
+  }
+  .vision_number {
+    min-width: 60px;
+  }
+
+  /* Footer */
+  .footer_nav ul {
+    text-align: left;
+  }
+  .footer_bottom {
+    flex-direction: column;
+  }
+}
+
+/* ----------  Monitores grandes  ---------- */
+@media (min-width: 1600px) {
+  :root {
+    --container_width: 1360px;
+  }
+}
