@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dev Point Studio
 
 Website institucional da **Dev Point Studio** — um software studio brasileiro.
@@ -101,3 +102,7 @@ A numeração e a estrutura visual são geradas automaticamente.
 - E-mail: devpoint2026@gmail.com
 - Telefone: (51) 9266-4141
 - Instagram: [@devpoint_](https://instagram.com/devpoint_)
+=======
+# DevPointStudio
+Portfólio de StartUp 
+>>>>>>> 17cb6639cc19200d9ea64563c92fa350eea586e5

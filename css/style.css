@@ -7,18 +7,18 @@
 /* ----------  1. Design tokens (CSS variables)  ---------- */
 :root {
   /* Cores */
-  /*--color_bg: #08080c;
-  --color_bg_soft: #0d0d13;
+  /*--color_bg:#212529;
+  --color_bg_soft: #212529;
   --color_surface: #101018;
-  --color_border: rgba(255, 255, 255, 0.08);
-  --color_border_soft: rgba(255, 255, 255, 0.05);
+  --color_border: #FB5607;
+  --color_border_soft: #FB5607;
 
   --color_text: #f4f4f6;
   --color_text_muted: #9a9aa6;
   --color_text_faint: #5a5a66;
 
-  --color_accent: #8b5cf6;
-  --color_accent_soft: #a78bfa;
+  --color_accent: #FB5607;
+  --color_accent_soft: #FB5607;
   --color_accent_deep: #6d28d9;
   --color_accent_glow: rgba(139, 92, 246, 0.35);*/
  
@@ -267,23 +267,17 @@ button:focus-visible {
   color: var(--color_text);
 }
 .brand_mark {
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
-  background: linear-gradient(140deg, var(--color_accent_soft), var(--color_accent_deep));
+  width: 45px;
+  height: 45px;
+  border-radius: 5px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 4px;
   place-content: center;
-  padding: 10px;
-  box-shadow: 0 6px 20px -8px var(--color_accent_glow);
+  padding: 6px;
+  /* box-shadow: 0 3px 20px -7px var(--color_accent_glow); */
 }
-.brand_mark span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #fff;
-}
+
 
 /* ----------  6. Header / navegação  ---------- */
 .site_header {
