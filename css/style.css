@@ -475,7 +475,7 @@ button:focus-visible {
   transition: background-color var(--speed_base) var(--ease_out);
 }
 .service_card:hover {
-  background: rgba(139, 92, 246, 0.06);
+  background: rgba(73, 8, 148, 0.178);
 }
 .service_number {
   position: absolute;
@@ -613,7 +613,7 @@ button:focus-visible {
 .project_item:hover,
 .project_item.is_active {
   padding-left: 1.5rem;
-  background: linear-gradient(90deg, rgba(63, 11, 11, 0.767), transparent);
+  background: linear-gradient(90deg, rgba(73, 8, 148, 0.178), transparent);
 }
 .project_number {
   font-family: var(--font_display);
@@ -734,7 +734,7 @@ button:focus-visible {
   transition: background-color var(--speed_base) var(--ease_out);
 }
 .why_item:hover {
-  background: rgba(246, 92, 92, 0.05);
+  background: rgba(73, 8, 148, 0.178);
 }
 .why_number {
   font-family: var(--font_display);
@@ -825,14 +825,14 @@ button:focus-visible {
 }
 .team_member:hover {
   transform: translateY(-4px);
-  border-color: rgba(139, 92, 246, 0.4);
+  border-color: red;
 }
 .team_avatar_wrap {
   display: grid;
   place-content: center;
   padding: 3rem 0;
   background:
-    radial-gradient(circle at 50% 40%, rgba(139, 92, 246, 0.12), transparent 60%),
+    radial-gradient(circle at 50% 40%, rgba(73, 8, 148, 0.178), transparent 60%),
     var(--color_surface);
   border-bottom: 1px solid var(--color_border_soft);
 }
