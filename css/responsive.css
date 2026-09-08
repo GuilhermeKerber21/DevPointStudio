@@ -86,12 +86,7 @@
     flex-direction: column;
     align-items: stretch;
   }
-  .hero_orbit {
-    width: 320px;
-    height: 320px;
-    top: 4%;
-    right: -30%;
-  }
+
 
   /* Services: uma coluna */
   .services_grid {
