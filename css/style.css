@@ -315,7 +315,7 @@ button:focus-visible {
   transition: color var(--speed_fast) var(--ease_out);
 }
 .nav_list a:hover {
-  color: var(--color_text);
+  color: var(--color_accent);
 }
 .nav_cta {
   padding: 0.7rem 1.3rem;
@@ -502,7 +502,7 @@ button:focus-visible {
   top: 40%;
   font-family: var(--font_display);
   font-weight: 800;
-  font-size: clamp(6rem, 20vw, 20rem);
+  font-size: clamp(12rem, 20vw, 200rem);
   color: transparent;
   -webkit-text-stroke: 1px var(--color_border);
   pointer-events: none;
