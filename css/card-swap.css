@@ -1,0 +1,304 @@
+/* =====================================================
+   DEV POINT STUDIO — Card Swap Projects
+   Vanilla adaptation of the supplied React/GSAP effect.
+   ===================================================== */
+
+.projects_layout_swap {
+  grid-template-columns: minmax(260px, 0.72fr) minmax(480px, 1.28fr);
+  align-items: center;
+  gap: 4rem;
+  min-height: 590px;
+}
+
+.projects_intro_copy {
+  max-width: 34rem;
+  padding-bottom: 1rem;
+}
+
+.projects_swap_nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.projects_swap_nav_btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.projects_swap_nav_number {
+  font-family: var(--font_display);
+  font-size: 0.78rem;
+  color: var(--color_text_faint);
+  min-width: 20px;
+  text-align: left;
+  transition: color var(--speed_base) var(--ease_out);
+}
+
+.projects_swap_nav_arrow {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--color_border);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  color: var(--color_text_muted);
+  transition: transform var(--speed_base) var(--ease_out),
+    border-color var(--speed_base) var(--ease_out),
+    color var(--speed_base) var(--ease_out);
+}
+.projects_swap_nav_arrow svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.projects_swap_nav_btn:hover .projects_swap_nav_number,
+.projects_swap_nav_btn.is_active .projects_swap_nav_number {
+  color: var(--color_text);
+}
+.projects_swap_nav_btn:hover .projects_swap_nav_arrow,
+.projects_swap_nav_btn.is_active .projects_swap_nav_arrow {
+  transform: rotate(-45deg);
+  border-color: var(--color_accent);
+  color: var(--color_accent_soft);
+}
+
+.projects_swap_hint {
+  color: var(--color_accent);
+  font-family: var(--font_display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.projects_swap_text {
+  color: var(--color_text_muted);
+  font-size: 1.8rem;
+  line-height: 1.5;
+  max-width: 38ch;
+}
+
+.projects_swap_control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 2rem;
+  color: var(--color_text_faint);
+  font-size: 0.78rem;
+}
+
+.projects_swap_dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color_accent);
+  box-shadow: 0 0 14px rgba(227, 6, 19, 0.65);
+}
+
+.card-swap-stage {
+  position: relative;
+  height: 570px;
+  min-width: 0;
+  perspective: 900px;
+}
+
+.card-swap-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 430px;
+  height: 500px;
+  transform: translate(-45%, -50%);
+  transform-origin: center center;
+  perspective: 900px;
+  overflow: visible;
+}
+
+.card-swap-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 430px;
+  height: 500px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #08080c;
+  overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+}
+
+.card-swap-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 38%, rgba(4, 4, 7, 0.95) 100%);
+  pointer-events: none;
+}
+
+.card-swap-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.card-swap-card:hover img {
+  transform: scale(1.035);
+}
+
+.card-swap-content {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.7rem;
+}
+
+.card-swap-content_top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.card-swap-cta {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: transform var(--speed_base) var(--ease_out),
+    border-color var(--speed_base) var(--ease_out),
+    color var(--speed_base) var(--ease_out);
+}
+.card-swap-cta svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.card-swap-card:hover .card-swap-cta,
+.card-swap-cta:hover {
+  transform: rotate(45deg);
+  border-color: var(--color_accent);
+  color: var(--color_accent_soft);
+}
+
+.card-swap-number {
+  display: block;
+  color: var(--color_accent);
+  font-family: var(--font_display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.55rem;
+}
+
+.card-swap-name {
+  margin: 0 0 0.4rem;
+  color: #fff;
+  font-family: var(--font_display);
+  font-size: clamp(1.25rem, 2.3vw, 1.65rem);
+  line-height: 1.2;
+}
+
+.card-swap-category {
+  display: block;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+  margin-bottom: 0.9rem;
+}
+
+.card-swap-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.card-swap-tag {
+  padding: 0.3rem 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 0.65rem;
+  backdrop-filter: blur(5px);
+}
+
+@media (max-width: 1024px) {
+  .projects_layout_swap {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 1rem;
+  }
+  .projects_intro_copy {
+    max-width: 100%;
+  }
+  .projects_swap_text {
+    max-width: 55ch;
+  }
+  .card-swap-stage {
+    height: 570px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .card-swap-stage {
+    height: 510px;
+    overflow: hidden;
+  }
+  .card-swap-container {
+    width: 340px;
+    height: 420px;
+    transform: translate(-50%, -50%) scale(0.78);
+  }
+  .card-swap-card {
+    width: 430px;
+    height: 500px;
+  }
+  .projects_swap_control {
+    margin-top: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-swap-stage {
+    height: 450px;
+  }
+  .card-swap-container {
+    transform: translate(-50%, -50%) scale(0.66);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-swap-card img {
+    transition: none;
+  }
+}

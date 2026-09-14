@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/responsive.css" />
   <link rel="stylesheet" href="css/depth-text.css" />
+  <link rel="stylesheet" href="css/card-swap.css" />
 
   <!-- ogl (WebGL) via import map (sem bundler/npm) -->
   <script type="importmap">
@@ -168,21 +169,19 @@
             <p class="section_kicker reveal" data-reveal> > Projetos</p>
             <h2 class="section_title reveal" data-reveal>Projetos que saíram do<br />papel.</h2>
           </div>
-          <p class="section_desc reveal" data-reveal>Cada projeto representa uma ideia transformada em uma solução digital real.</p>
         </header>
 
-        <div class="projects_layout">
-          <ul class="projects_list" id="projects_list">
-            <!-- Itens injetados via js/script.js -->
-          </ul>
+        <div class="projects_layout projects_layout_swap">
+          <div class="projects_intro_copy">
+            <ul class="projects_swap_nav" id="projects_swap_nav" aria-label="Selecionar projeto em destaque">
+              <!-- Botões injetados via js/card-swap.js -->
+            </ul>
+            <p class="projects_swap_control"><span class="projects_swap_dot"></span> Troca automática a cada 5 segundos</p>
+          </div>
 
-          <figure class="project_preview" id="project_preview">
-            <img id="project_preview_image" src="assets/images/project_01.png" alt="Pré-visualização do Projeto 01" width="480" height="600" />
-            <figcaption class="project_preview_caption">
-              <span class="project_preview_name" id="project_preview_name">Projeto 01</span>
-              <span class="project_preview_tags" id="project_preview_tags"></span>
-            </figcaption>
-          </figure>
+          <div class="card-swap-stage" aria-label="Projetos em destaque">
+            <div class="card-swap-container" id="projects_card_swap"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -316,6 +315,8 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="js/card-swap.js"></script>
   <script src="js/script.js"></script>
   <script type="module" src="js/ripple-grid-init.js"></script>
   <script type="module" src="js/depth-text-init.js"></script>

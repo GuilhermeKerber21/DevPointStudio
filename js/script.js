@@ -50,7 +50,7 @@ const projects_data = [
     description: "Conecta clientes a soluções financeiras e empresariais em uma única plataforma.",
     image: "assets/images/project_01.png",
     technologies: ["CSS", "HTML", "JavaScript"],
-    link: "#contact",
+    link: "https://vemcomhub.com.br/",
   },
   {
     number: "02",
@@ -196,70 +196,13 @@ function render_services() {
 }
 
 function render_projects() {
-  const list = document.getElementById("projects_list");
-  if (!list) return;
+  const container = document.getElementById("projects_card_swap");
+  const nav = document.getElementById("projects_swap_nav");
+  if (!container) return;
 
-  list.innerHTML = projects_data
-    .map(function (project, index) {
-      return (
-        '<li class="project_item reveal' + (index === 0 ? " is_active" : "") + '"' +
-        ' data-reveal data-index="' + index + '" tabindex="0" role="button"' +
-        ' aria-label="Ver ' + project.name + '">' +
-        '<span class="project_number">' + project.number + "</span>" +
-        '<span class="project_name">' + project.name + "</span>" +
-        '<span class="project_category">' + project.category + "</span>" +
-        '<span class="project_arrow">' + arrow_icon + "</span>" +
-        "</li>"
-      );
-    })
-    .join("");
-
-  update_project_preview(0);
-
-  const items = list.querySelectorAll(".project_item");
-  items.forEach(function (item) {
-    const index = Number(item.dataset.index);
-    item.addEventListener("mouseenter", function () {
-      set_active_project(items, index);
-    });
-    item.addEventListener("focus", function () {
-      set_active_project(items, index);
-    });
-    item.addEventListener("click", function () {
-      set_active_project(items, index);
-    });
-    item.addEventListener("keydown", function (event) {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        set_active_project(items, index);
-      }
-    });
-  });
-}
-
-function set_active_project(items, index) {
-  items.forEach(function (el) {
-    el.classList.remove("is_active");
-  });
-  items[index].classList.add("is_active");
-  update_project_preview(index);
-}
-
-function update_project_preview(index) {
-  const project = projects_data[index];
-  const image = document.getElementById("project_preview_image");
-  const name = document.getElementById("project_preview_name");
-  const tags = document.getElementById("project_preview_tags");
-  if (!project || !image) return;
-
-  image.src = project.image;
-  image.alt = "Pré-visualização do " + project.name + " — " + project.category;
-  name.textContent = project.name;
-  tags.innerHTML = project.technologies
-    .map(function (tech) {
-      return '<span class="project_tag">' + tech + "</span>";
-    })
-    .join("");
+  if (typeof window.initCardSwap === "function") {
+    window.initCardSwap(container, projects_data, nav);
+  }
 }
 
 function render_why() {
