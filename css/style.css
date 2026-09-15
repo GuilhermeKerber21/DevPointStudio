@@ -40,6 +40,7 @@
   /* Tipografia */
   --font_display: "Sora", system-ui, sans-serif;
   --font_body: "Inter", system-ui, sans-serif;
+  --font_ghost: "Anton", var(--font_display);
 
   /* Espaçamentos */
   --space_xs: 0.5rem;
@@ -496,20 +497,23 @@ button:focus-visible {
 .about_section {
   overflow: hidden;
 }
-.about_ghost {
+  .about_ghost {
   position: absolute;
-  left: -3%;
-  top: 40%;
+  left: 50%;
+  top: 38%;
+  transform: translateX(-50%);
   font-family: var(--font_display);
   font-weight: 800;
-  font-size: clamp(12rem, 20vw, 200rem);
-  color: transparent;
-  -webkit-text-stroke: 1px var(--color_border);
+  font-size: clamp(6rem, 13vw, 15rem);
+  color: rgba(83, 2, 8, 0.35);
+  -webkit-text-stroke: 1.5px rgba(83, 2, 8, 0.35);
   pointer-events: none;
   user-select: none;
   line-height: 1;
   z-index: 0;
+  white-space: nowrap;
 }
+
 .about_intro {
   position: relative;
   z-index: 1;
@@ -896,13 +900,14 @@ button:focus-visible {
 }
 .vision_ghost {
   position: absolute;
-  right: -2%;
+  right: 50%;
   top: 45%;
+  transform: translateX(50%);
   font-family: var(--font_display);
   font-weight: 800;
   font-size: clamp(6rem, 22vw, 22rem);
-  color: transparent;
-  -webkit-text-stroke: 1px var(--color_border_soft);
+  color: rgba(83, 2, 8, 0.35);
+  -webkit-text-stroke: 1.5px rgba(83, 2, 8, 0.35);
   pointer-events: none;
   user-select: none;
   line-height: 1;
