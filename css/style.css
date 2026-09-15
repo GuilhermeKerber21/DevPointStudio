@@ -1008,68 +1008,82 @@ button:focus-visible {
   padding-block: 4rem 2rem;
 }
 .footer_top {
-  display: grid; 
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 3rem;
   flex-wrap: wrap;
-  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--color_border_soft);
 }
 .footer_tagline {
   color: var(--color_text_muted);
   margin-top: 1rem;
-  max-width: 30ch;
-  justify-content: right;
+  max-width: 32ch;
+  font-size: 0.95rem;
 }
+
+/* Redes sociais, abaixo da marca */
+.footer_socials {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 1.75rem;
+}
+.footer_icon_link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--speed_fast) var(--ease_out),
+    filter var(--speed_fast) var(--ease_out);
+}
+.footer_icon_link svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  display: block;
+}
+.footer_icon_link:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+}
+
+/* Cada rede na sua cor de marca */
+.footer_icon_email {
+  color: #ea4335;
+}
+.footer_icon_whatsapp {
+  color: #25d366;
+}
+.footer_icon_instagram {
+  color: #e4405f;
+}
+.footer_icon_linkedin {
+  color: #0a66c2;
+}
+
+/* Links de navegação, à direita */
 .footer_nav ul {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  text-align: center;
+  text-align: right;
 }
 .footer_nav a {
   color: var(--color_text_muted);
+  font-size: 0.95rem;
   transition: color var(--speed_fast) var(--ease_out);
 }
 .footer_nav a:hover {
-  color: var(--color_text);
-}
-.footer_contacts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  padding-block: 2rem;
-  border-top: 1px solid var(--color_border_soft);
-  color: var(--color_text_muted);
-  font-size: 0.9rem;
-  justify-content: center;
-}
-.footer_contacts a:hover {
-  color: var(--color_text);
-  
-}
-.footer_icon_link svg {
-  fill:red;
-  width: 30px;
-  height: 30px;
-  display: inline-flex;
-  align-items: center;
+  color: var(--color_accent);
 }
 
-.footer_icon_link svg:hover {
-  fill: rgba(121, 3, 3, 0.842);
-  transition: 0.5s;
-  box-shadow: #740910;
-}
-.footer_soon {
-  color: var(--color_text_faint);
-}
 .footer_bottom {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--color_border_soft);
   color: var(--color_text_faint);
   font-size: 0.85rem;
 }
@@ -1078,7 +1092,7 @@ button:focus-visible {
   gap: 1.5rem;
 }
 .footer_legal a:hover {
-  color: var(--color_text_muted);
+  color: var(--color_accent);
 }
 
 /* ----------  17. Animações de reveal (scroll)  ---------- */

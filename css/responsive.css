@@ -133,6 +133,10 @@
   }
 
   /* Footer */
+  .footer_top {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
   .footer_nav ul {
     text-align: left;
   }
