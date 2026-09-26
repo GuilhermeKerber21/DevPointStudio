@@ -70,38 +70,7 @@ const projects_data = [
     technologies: ["HTML", "CSS", "JavaScript"],
     link: "https://www.jonathanroliveira.com/",
   },
-  {
-    number: "04",
-    name: "Projeto 04",
-    category: "Integração & Automação",
-    description: "Automação de processos entre ferramentas do cliente.",
-    image: "assets/images/project_04.png",
-    technologies: ["Webhooks", "Zapier", "API"],
-    link: "#contact",
-  },
-];
-
-const why_data = [
-  {
-    title: "Atendimento próximo",
-    text: "Relação direta e personalizada com cada cliente. Sem intermediários, sem respostas genéricas. Você fala com quem desenvolve.",
-  },
-  {
-    title: "Soluções sob medida",
-    text: "Cada projeto é pensado para uma realidade específica. Não aplicamos templates prontos quando o problema exige uma solução própria.",
-  },
-  {
-    title: "Tecnologias modernas",
-    text: "Ferramentas atuais para produtos de qualidade. Escolhemos o que faz sentido para cada projeto, não o que está na moda.",
-  },
-  {
-    title: "Compromisso com qualidade",
-    text: "Cuidado em cada etapa, do código à entrega. Não entregamos algo que não usaríamos nós mesmos.",
-  },
-  {
-    title: "Evolução constante",
-    text: "Estudo contínuo e melhoria a cada projeto. O que entregamos hoje é melhor do que o que entregamos ontem.",
-  },
+  
 ];
 
 const process_data = [
@@ -203,25 +172,6 @@ function render_projects() {
   if (typeof window.initCardSwap === "function") {
     window.initCardSwap(container, projects_data, nav);
   }
-}
-
-function render_why() {
-  const list = document.getElementById("why_list");
-  if (!list) return;
-
-  list.innerHTML = why_data
-    .map(function (item, index) {
-      const number = String(index + 1).padStart(2, "0");
-      return (
-        '<li class="why_item reveal" data-reveal>' +
-        '<span class="why_number">' + number + "</span>" +
-        "<div>" +
-        '<h3 class="why_title">' + item.title + "</h3>" +
-        '<p class="why_text">' + item.text + "</p>" +
-        "</div></li>"
-      );
-    })
-    .join("");
 }
 
 function render_process() {
@@ -364,7 +314,6 @@ function setup_scroll_reveal() {
 function init() {
   render_services();
   render_projects();
-  render_why();
   render_process();
   render_team();
   render_vision();

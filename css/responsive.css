@@ -28,14 +28,6 @@
     margin-inline: auto;
     order: -1;
   }
-
-  .why_layout {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-  .why_intro {
-    position: static;
-  }
 }
 
 /* ----------  Mobile  ---------- */

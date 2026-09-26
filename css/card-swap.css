@@ -33,7 +33,7 @@
 
 .projects_swap_nav_number {
   font-family: var(--font_display);
-  font-size: 0.78rem;
+  font-size: 1rem;
   color: var(--color_text_faint);
   min-width: 20px;
   text-align: left;
@@ -41,8 +41,8 @@
 }
 
 .projects_swap_nav_arrow {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--color_border);
   border-radius: 50%;
   display: grid;
@@ -53,8 +53,8 @@
     color var(--speed_base) var(--ease_out);
 }
 .projects_swap_nav_arrow svg {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;

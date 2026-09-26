@@ -50,7 +50,7 @@
       navContainer.innerHTML = projects.map(function (project, index) {
         return '<li>' +
           '<button type="button" class="projects_swap_nav_btn' + (index === 0 ? ' is_active' : '') + '" data-nav-index="' + index + '" aria-label="Ver ' + project.name + '">' +
-            '<span class="projects_swap_nav_number">' + project.number + '</span>' +
+            '<span class="projects_swap_nav_number">' + project.number + '- ' +  project.name + '</span>' +
             '<span class="projects_swap_nav_arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>' +
           '</button>' +
         '</li>';

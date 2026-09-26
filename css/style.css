@@ -696,49 +696,6 @@ button:focus-visible {
   color: var(--color_text_muted);
 }
 
-/* ----------  11. Why us  ---------- */
-.why_layout {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 4rem;
-  align-items: start;
-}
-.why_intro {
-  position: sticky;
-  top: 120px;
-}
-.why_list {
-  display: flex;
-  flex-direction: column;
-}
-.why_item {
-  display: flex;
-  gap: 1.75rem;
-  padding: 2rem 1.5rem;
-  border-top: 1px solid var(--color_border_soft);
-  border-radius: var(--radius_md);
-  transition: background-color var(--speed_base) var(--ease_out);
-}
-.why_item:hover {
-  background: rgba(73, 8, 148, 0.178);
-}
-.why_number {
-  font-family: var(--font_display);
-  font-size: 0.8rem;
-  color: var(--color_accent);
-  font-weight: 700;
-  padding-top: 0.3rem;
-}
-.why_title {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-.why_text {
-  color: var(--color_text_muted);
-  font-size: 0.95rem;
-  max-width: 56ch;
-}
-
 /* ----------  12. Process timeline  ---------- */
 .process_timeline {
   position: relative;
@@ -864,34 +821,6 @@ button:focus-visible {
   border: 1px solid var(--color_border);
   border-radius: var(--radius_pill);
   color: var(--color_text_muted);
-}
-.team_join {
-  margin-top: 2rem;
-  border: 1px dashed var(--color_border);
-  border-radius: var(--radius_lg);
-  padding: 3rem;
-  text-align: center;
-}
-.team_join_plus {
-  display: inline-grid;
-  place-content: center;
-  width: 46px;
-  height: 46px;
-  border: 1px solid var(--color_border);
-  border-radius: 50%;
-  color: var(--color_text_muted);
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-}
-.team_join_title {
-  font-family: var(--font_display);
-  font-weight: 600;
-  color: var(--color_text);
-  margin-bottom: 0.25rem;
-}
-.team_join_text {
-  color: var(--color_text_faint);
-  font-size: 0.9rem;
 }
 
 /* ----------  14. Vision  ---------- */
