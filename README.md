@@ -67,7 +67,7 @@ em arrays fáceis de editar — sem precisar mexer no HTML ou no CSS:
 | Diferenciais          | `why_data`                   |
 | Etapas do processo    | `process_data`               |
 | Equipe                | `team_data`                  |
-| Visão de futuro       | `vision_data`                |
+| Perguntas frequentes | `faq_data`                   |
 | Cores / fontes        | variáveis em `css/style.css` (`:root`) |
 | Textos fixos          | `index.html`                 |
 

@@ -123,11 +123,31 @@ const team_data = [
   },
 ];
 
-const vision_data = [
-  "Crescer como empresa de tecnologia",
-  "Criar soluções cada vez mais completas",
-  "Ajudar mais empresas através da tecnologia",
-  "Construir uma marca reconhecida pela qualidade",
+const faq_data = [
+  {
+    question: "Quais serviços a Dev Point oferece?",
+    answer: "Desenvolvemos sites institucionais, landing pages, sistemas personalizados, integrações e automações, bancos de dados e outras soluções sob medida para cada negócio.",
+  },
+  {
+    question: "Quanto custa um projeto?",
+    answer: "O valor depende do tipo de projeto, das funcionalidades e do nível de personalização. Conversamos sobre sua necessidade e montamos uma proposta de acordo com o que realmente faz sentido para o seu negócio.",
+  },
+  {
+    question: "Quanto tempo leva para desenvolver um projeto?",
+    answer: "O prazo varia conforme o escopo e a complexidade. Depois de entendermos o projeto, definimos uma previsão de entrega e as principais etapas do desenvolvimento.",
+  },
+  {
+    question: "A Dev Point atende pequenos negócios?",
+    answer: "Sim. Trabalhamos com empresas e pequenos negócios que precisam de uma presença digital mais profissional, processos mais eficientes ou uma solução criada especificamente para sua realidade.",
+  },
+  {
+    question: "Vocês fazem manutenção depois da entrega?",
+    answer: "Sim. Podemos continuar acompanhando o projeto depois da entrega para realizar ajustes, melhorias, atualizações e suporte conforme a necessidade.",
+  },
+  {
+    question: "Como posso começar um projeto com a Dev Point?",
+    answer: "É só entrar em contato pelo e-mail ou WhatsApp. Você conta um pouco sobre o que precisa e, a partir disso, conversamos sobre a melhor solução e os próximos passos.",
+  },
 ];
 
 /* ----------  2. Ícones SVG (traço) para os serviços  ---------- */
@@ -221,21 +241,45 @@ function render_team() {
     .join("");
 }
 
-function render_vision() {
-  const list = document.getElementById("vision_list");
+function render_faq() {
+  const list = document.getElementById("faq_list");
   if (!list) return;
 
-  list.innerHTML = vision_data
-    .map(function (text, index) {
-      const number = String(index + 1).padStart(2, "0");
+  list.innerHTML = faq_data
+    .map(function (item, index) {
+      const is_open = index === 0;
       return (
-        '<li class="vision_item reveal" data-reveal>' +
-        '<span class="vision_number">' + number + "</span>" +
-        '<span class="vision_text">' + text + "</span>" +
-        "</li>"
+        '<article class="faq_item reveal' + (is_open ? ' is_open' : '') + '" data-reveal>' +
+        '<button class="faq_question" type="button" aria-expanded="' + is_open + '" aria-controls="faq_answer_' + index + '">' +
+        '<span class="faq_question_number">' + String(index + 1).padStart(2, "0") + '</span>' +
+        '<span class="faq_question_text">' + item.question + '</span>' +
+        '<span class="faq_toggle" aria-hidden="true"><span></span><span></span></span>' +
+        '</button>' +
+        '<div class="faq_answer_wrap" id="faq_answer_' + index + '">' +
+        '<div class="faq_answer"><p>' + item.answer + '</p></div>' +
+        '</div>' +
+        '</article>'
       );
     })
     .join("");
+
+  list.querySelectorAll(".faq_question").forEach(function (button) {
+    button.addEventListener("click", function () {
+      const item = button.closest(".faq_item");
+      const is_open = item.classList.contains("is_open");
+
+      list.querySelectorAll(".faq_item.is_open").forEach(function (open_item) {
+        open_item.classList.remove("is_open");
+        const open_button = open_item.querySelector(".faq_question");
+        if (open_button) open_button.setAttribute("aria-expanded", "false");
+      });
+
+      if (!is_open) {
+        item.classList.add("is_open");
+        button.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
 }
 
 /* ----------  4. Menu mobile  ---------- */
@@ -361,10 +405,12 @@ function apply_team_language() {
   });
 }
 
-function apply_vision_language() {
-  const items = localized("vision", vision_data);
-  document.querySelectorAll("#vision_list .vision_item").forEach(function (item, i) {
-    set_text(item, ".vision_text", items[i]);
+function apply_faq_language() {
+  const items = localized("faq", faq_data);
+  document.querySelectorAll("#faq_list .faq_item").forEach(function (item, i) {
+    if (!items[i]) return;
+    set_text(item, ".faq_question_text", items[i].question);
+    set_text(item, ".faq_answer p", items[i].answer);
   });
 }
 
@@ -401,7 +447,7 @@ function apply_data_language() {
   apply_services_language();
   apply_process_language();
   apply_team_language();
-  apply_vision_language();
+  apply_faq_language();
   apply_projects_language();
 
   const menu = document.getElementById("menu_toggle");
@@ -422,7 +468,7 @@ function init() {
   render_projects();
   render_process();
   render_team();
-  render_vision();
+  render_faq();
 
   setup_mobile_menu();
   setup_header_scroll();

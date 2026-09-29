@@ -126,12 +126,36 @@
     grid-template-columns: 1fr;
   }
 
-  /* Vision */
-  .vision_item {
+  /* FAQ */
+  .faq_header {
+    grid-template-columns: 1fr;
     gap: 1.25rem;
+    margin-bottom: 2rem;
   }
-  .vision_number {
-    min-width: 60px;
+  .faq_question {
+    grid-template-columns: 48px 1fr 34px;
+    gap: 0.75rem;
+    padding-block: 1.35rem;
+  }
+  .faq_answer p {
+    padding-left: 48px;
+    padding-right: 2.5rem;
+  }
+  .faq_ghost {
+    right: 50%;
+    top: 58%;
+  }
+
+  .faq_question_number {
+    font-size: 0.85rem;
+  }
+  .faq_question_text {
+    font-size: 1rem;
+  }
+  .faq_answer p {
+    padding-left: 0;
+    padding-right: 2.75rem;
+    font-size: 0.95rem;
   }
 
   /* Footer */

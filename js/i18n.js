@@ -40,6 +40,7 @@
     nav_projects: "Projects",
     nav_process: "Process",
     nav_about: "About",
+    nav_faq: "FAQ",
     cta_start: "Start a project",
     menu_open: "Open menu",
     menu_close: "Close menu",
@@ -79,10 +80,9 @@
 
     team_title: "Behind Dev Point.",
 
-    vision_ghost: "FUTURE",
-    vision_kicker: "> Vision for the future",
-    vision_title:
-      'We are just<br /><span class="accent_gradient">getting started.</span>',
+    faq_kicker: "> Frequently asked questions",
+    faq_title:
+      'Questions? <span class="accent_gradient">We have answers.</span>',
 
     contact_kicker: "> Next step",
     contact_title:
@@ -202,11 +202,31 @@
         skills: ["Front-End", "Digital Marketing", "Social Media"],
       },
     ],
-    vision: [
-      "Grow as a technology company",
-      "Create increasingly complete solutions",
-      "Help more companies through technology",
-      "Build a brand recognized for quality",
+    faq: [
+      {
+        question: "What services does Dev Point offer?",
+        answer: "We develop corporate websites, landing pages, custom systems, integrations and automations, databases and other tailor-made solutions for each business.",
+      },
+      {
+        question: "How much does a project cost?",
+        answer: "The price depends on the type of project, features and level of customization. We discuss your needs and prepare a proposal based on what actually makes sense for your business.",
+      },
+      {
+        question: "How long does a project take to develop?",
+        answer: "The timeline varies according to the scope and complexity. After understanding the project, we define an estimated delivery date and the main development stages.",
+      },
+      {
+        question: "Does Dev Point work with small businesses?",
+        answer: "Yes. We work with companies and small businesses that need a more professional digital presence, more efficient processes or a solution created specifically for their reality.",
+      },
+      {
+        question: "Do you provide maintenance after delivery?",
+        answer: "Yes. We can continue supporting the project after delivery with adjustments, improvements, updates and ongoing support as needed.",
+      },
+      {
+        question: "How can I start a project with Dev Point?",
+        answer: "Just contact us by email or WhatsApp. Tell us a little about what you need and we will discuss the best solution and the next steps.",
+      },
     ],
   };
 
