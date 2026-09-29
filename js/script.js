@@ -74,6 +74,7 @@ const projects_data = [
 ];
 
 const process_data = [
+  
   {
     number: "01",
     name: "Entendimento",
@@ -105,6 +106,8 @@ const process_data = [
     text: "Entrega final acompanhada e suporte contínuo. Seguimos por perto para garantir que tudo funcione a longo prazo.",
   },
 ];
+
+
 
 const team_data = [
   {
@@ -212,6 +215,42 @@ function render_process() {
       );
     })
     .join("");
+}
+// =========================
+// PROCESSO — ETAPA ATIVA
+// =========================
+
+function setup_process_active() {
+  const processSteps = document.querySelectorAll(".process_step");
+
+  if (!processSteps.length) return;
+
+  function updateActiveProcessStep() {
+    const screenCenter = window.innerHeight / 2;
+
+    let closestStep = null;
+    let closestDistance = Infinity;
+
+    processSteps.forEach(function (step) {
+      const rect = step.getBoundingClientRect();
+      const stepCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(screenCenter - stepCenter);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestStep = step;
+      }
+    });
+
+    processSteps.forEach(function (step) {
+      step.classList.toggle("active", step === closestStep);
+    });
+  }
+
+  window.addEventListener("scroll", updateActiveProcessStep);
+  window.addEventListener("resize", updateActiveProcessStep);
+
+  updateActiveProcessStep();
 }
 
 function render_team() {
@@ -467,6 +506,7 @@ function init() {
   render_services();
   render_projects();
   render_process();
+  setup_process_active();
   render_team();
   render_faq();
 

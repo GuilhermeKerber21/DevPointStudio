@@ -811,56 +811,155 @@ button:focus-visible {
 /* ----------  12. Process timeline  ---------- */
 .process_timeline {
   position: relative;
-  margin-top: 3rem;
-  padding-left: 1rem;
+  max-width: 1100px;
+  margin: 4rem auto 0;
+  padding: 1rem 0 2rem;
 }
+
+/* Linha central */
 .process_timeline::before {
   content: "";
   position: absolute;
-  left: 6px;
-  top: 12px;
-  bottom: 12px;
+  top: 0;
+  bottom: 0;
+  left: 50%;
   width: 1px;
-  background: var(--color_border);
+  background: rgba(227, 6, 19, 0.35);
+  transform: translateX(-50%);
 }
+
+/* Cada etapa */
 .process_step {
   position: relative;
   display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 2rem;
-  padding: 2rem 0 2rem 2.5rem;
+  grid-template-columns: 1fr 80px 1fr;
+  align-items: center;
+  min-height: 170px;
+  margin-bottom: 1.5rem;
 }
+
+/* Etapa ativa */
+.process_step.active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  z-index: -1;
+  transition: all 0.4s ease;
+}
+
+.process_step.active::before {
+  width: 16px;
+  height: 16px;
+  background: var(--color_accent);
+  box-shadow:
+    0 0 0 5px rgba(227, 6, 19, 0.12),
+    0 0 25px rgba(227, 6, 19, 0.4);
+  transition: all 0.4s ease;
+}
+
+/* Transição suave das etapas */
+.process_step {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.process_step:not(.active) {
+  opacity: 0.72;
+}
+
+.process_step.active {
+  opacity: 1;
+}
+
+/* Ponto central */
 .process_step::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: 2.4rem;
+  left: 50%;
+  top: 50%;
   width: 13px;
   height: 13px;
   border-radius: 50%;
   background: var(--color_accent);
-  box-shadow: 0 0 0 4px rgba(155, 17, 17, 0.733);
-  transform: translateX(-6px);
+  border: 4px solid #0a0a0a;
+  box-shadow:
+    0 0 0 1px rgba(227, 6, 19, 0.55),
+    0 0 18px rgba(227, 6, 19, 0.25);
+  transform: translate(-50%, -50%);
+  z-index: 3;
 }
+
+/* Conteúdo da esquerda */
+.process_step > :first-child {
+  grid-column: 1;
+  text-align: right;
+  padding-right: 2.5rem;
+}
+
+/* Descrição */
+.step_text {
+  grid-column: 3;
+  color: var(--color_text_muted);
+  max-width: 390px;
+  padding-left: 2.5rem;
+  align-self: center;
+}
+
+/* Número */
 .step_number {
   font-family: var(--font_display);
-  font-size: 2.4rem;
+  font-size: 2.8rem;
   font-weight: 700;
-  color: var(--color_accent_soft);
   line-height: 1;
+  color: var(--color_accent);
+  margin-bottom: 0.45rem;
 }
+
+/* Nome da etapa */
 .step_name {
-  font-size: 1.3rem;
-  margin: 0.4rem 0 0.2rem;
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color_text);
 }
+
+/* Texto pequeno abaixo do título */
 .step_tag {
+  display: block;
+  margin-top: 0.5rem;
   color: var(--color_text_faint);
   font-size: 0.85rem;
+  line-height: 1.4;
 }
+
+/* Descrição principal */
 .step_text {
-  color: var(--color_text_muted);
-  max-width: 52ch;
-  align-self: center;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* =========================
+   ALTERNÂNCIA
+   ========================= */
+
+/* Etapas pares vão para o lado esquerdo */
+.process_step:nth-child(even) > :first-child {
+  grid-column: 3;
+  grid-row: 1;
+  text-align: left;
+  padding-left: 2.5rem;
+  padding-right: 0;
+}
+
+.process_step:nth-child(even) .step_text {
+  grid-column: 1;
+  grid-row: 1;
+  text-align: right;
+  padding-left: 0;
+  padding-right: 2.5rem;
 }
 
 /* ----------  13. Team  ---------- */
