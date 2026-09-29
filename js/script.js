@@ -240,6 +240,12 @@ function render_vision() {
 
 /* ----------  4. Menu mobile  ---------- */
 
+function menu_label(is_open) {
+  const key = is_open ? "menu_close" : "menu_open";
+  const label = window.i18n ? window.i18n.t(key) : null;
+  return label || (is_open ? "Fechar menu" : "Abrir menu");
+}
+
 function setup_mobile_menu() {
   const toggle = document.getElementById("menu_toggle");
   const nav = document.getElementById("main_nav");
@@ -248,14 +254,14 @@ function setup_mobile_menu() {
   function close_menu() {
     nav.classList.remove("is_open");
     toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Abrir menu");
+    toggle.setAttribute("aria-label", menu_label(false));
     document.body.classList.remove("menu_open");
   }
 
   toggle.addEventListener("click", function () {
     const is_open = nav.classList.toggle("is_open");
     toggle.setAttribute("aria-expanded", String(is_open));
-    toggle.setAttribute("aria-label", is_open ? "Fechar menu" : "Abrir menu");
+    toggle.setAttribute("aria-label", menu_label(is_open));
     document.body.classList.toggle("menu_open", is_open);
   });
 
@@ -309,7 +315,107 @@ function setup_scroll_reveal() {
   });
 }
 
-/* ----------  7. Inicialização  ---------- */
+/* ----------  7. Idioma (PT / EN)  ---------- */
+
+/* Os arrays acima ficam em português. Ao trocar de idioma, os textos já
+   renderizados são atualizados no lugar (sem recriar os cards), assim as
+   animações de entrada e o carrossel de projetos não reiniciam. */
+
+function localized(section, items) {
+  return window.i18n ? window.i18n.localize(section, items) : items;
+}
+
+function set_text(parent, selector, value) {
+  const el = parent.querySelector(selector);
+  if (el && value != null) el.textContent = value;
+}
+
+function apply_services_language() {
+  const items = localized("services", services_data);
+  document.querySelectorAll("#services_grid .service_card").forEach(function (card, i) {
+    if (!items[i]) return;
+    set_text(card, ".service_title", items[i].title);
+    set_text(card, ".service_text", items[i].text);
+  });
+}
+
+function apply_process_language() {
+  const items = localized("process", process_data);
+  document.querySelectorAll("#process_timeline .process_step").forEach(function (step, i) {
+    if (!items[i]) return;
+    set_text(step, ".step_name", items[i].name);
+    set_text(step, ".step_tag", items[i].tag);
+    set_text(step, ".step_text", items[i].text);
+  });
+}
+
+function apply_team_language() {
+  const items = localized("team", team_data);
+  document.querySelectorAll("#team_grid .team_member").forEach(function (member, i) {
+    if (!items[i]) return;
+    set_text(member, ".team_role", items[i].role);
+    set_text(member, ".team_bio", items[i].bio);
+    member.querySelectorAll(".team_skill").forEach(function (skill, j) {
+      if (items[i].skills[j] != null) skill.textContent = items[i].skills[j];
+    });
+  });
+}
+
+function apply_vision_language() {
+  const items = localized("vision", vision_data);
+  document.querySelectorAll("#vision_list .vision_item").forEach(function (item, i) {
+    set_text(item, ".vision_text", items[i]);
+  });
+}
+
+function apply_projects_language() {
+  const is_en = window.i18n && window.i18n.lang === "en";
+  const items = localized("projects", projects_data);
+
+  document.querySelectorAll("#projects_card_swap [data-card-index]").forEach(function (card) {
+    const p = items[Number(card.dataset.cardIndex)];
+    if (!p) return;
+    set_text(card, ".card-swap-name", p.name);
+    set_text(card, ".card-swap-category", p.category);
+    card.setAttribute("aria-label", (is_en ? "Open " : "Abrir ") + p.name);
+
+    const img = card.querySelector("img");
+    if (img) {
+      img.alt = is_en
+        ? "Preview of " + p.name + ", " + p.category
+        : "Pré-visualização do " + p.name + " — " + p.category;
+    }
+    const cta = card.querySelector(".card-swap-cta");
+    if (cta) cta.setAttribute("aria-label", (is_en ? "View " : "Ver ") + p.name);
+  });
+
+  document.querySelectorAll("#projects_swap_nav .projects_swap_nav_btn").forEach(function (btn) {
+    const p = items[Number(btn.dataset.navIndex)];
+    if (!p) return;
+    set_text(btn, ".projects_swap_nav_number", p.number + "- " + p.name);
+    btn.setAttribute("aria-label", (is_en ? "View " : "Ver ") + p.name);
+  });
+}
+
+function apply_data_language() {
+  apply_services_language();
+  apply_process_language();
+  apply_team_language();
+  apply_vision_language();
+  apply_projects_language();
+
+  const menu = document.getElementById("menu_toggle");
+  if (menu) {
+    menu.setAttribute("aria-label", menu_label(menu.getAttribute("aria-expanded") === "true"));
+  }
+}
+
+// Registrado já no carregamento: o i18n.js avisa aqui a cada troca de idioma.
+if (window.i18n) {
+  window.i18n.on_change(apply_data_language);
+}
+
+/* ----------  8. Inicialização  ---------- */
 
 function init() {
   render_services();
@@ -320,6 +426,9 @@ function init() {
 
   setup_mobile_menu();
   setup_header_scroll();
+
+  // Se o visitante já tinha escolhido inglês, traduz o conteúdo recém-renderizado.
+  apply_data_language();
 
   // Reveal precisa rodar depois da renderização dos componentes,
   // pois os cards são criados dinamicamente com [data-reveal].

@@ -38,6 +38,16 @@
   }
 
   /* Navegação mobile: menu em painel deslizante */
+  .header_right {
+    gap: 0.5rem;
+  }
+  .lang_toggle {
+    --lang_w: 78px;
+    --lang_h: 36px;
+    --lang_knob: 26px;
+    z-index: 110; /* fica acima do painel do menu, sempre acessível */
+    font-size: 0.85rem;
+  }
   .menu_toggle {
     display: flex;
     z-index: 110;
