@@ -112,6 +112,7 @@ const process_data = [
 const team_data = [
   {
     initials: "YS",
+    photo:"assets/images/ygor.jpg",
     name: "Ygor Silveira",
     role: "Desenvolvimento & Project Manager",
     bio: "Responsável pelo desenvolvimento, estrutura dos projetos, programação e soluções digitais. Garante que cada linha de código serve ao propósito do negócio.",
@@ -120,6 +121,7 @@ const team_data = [
   {
     initials: "GK",
     name: "Guilherme Severo Kerber",
+    photo:"assets/images/guilherme.jpg",
     role: "Desenvolvimento & Marketing",
     bio: "Responsável pelo desenvolvimento de projetos e soluções digitais, e pela divulgação da empresa através das redes sociais. Une técnica e comunicação.",
     skills: ["Front-End", "Marketing Digital", "Social Media"],
@@ -216,6 +218,7 @@ function render_process() {
     })
     .join("");
 }
+
 // =========================
 // PROCESSO — ETAPA ATIVA
 // =========================
@@ -267,7 +270,9 @@ function render_team() {
       return (
         '<article class="team_member reveal" data-reveal>' +
         '<div class="team_avatar_wrap">' +
-        '<span class="team_avatar">' + member.initials + "</span>" +
+        (member.photo
+          ? '<img class="team_avatar team_avatar_img" src="' + member.photo + '" alt="' + member.name + '" loading="lazy">'
+          : '<span class="team_avatar">' + member.initials + "</span>") +
         "</div>" +
         '<div class="team_body">' +
         '<h3 class="team_name">' + member.name + "</h3>" +

@@ -1003,6 +1003,14 @@ button:focus-visible {
   background: linear-gradient(140deg, var(--color_accent_soft), var(--color_accent_deep));
   box-shadow: 0 12px 40px -12px var(--color_accent_glow);
 }
+
+.team_avatar_img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 2px solid var(--color_accent_soft);
+}
+
 .team_body {
   padding: 2rem;
 }
