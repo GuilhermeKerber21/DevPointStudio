@@ -59,7 +59,7 @@
     about_title:
       'Technology is not just code. <span class="muted_text">It is a tool to solve problems.</span>',
     about_paragraph:
-      "Dev Point is a technology company that helps businesses grow through customized digital solutions. Small enough to be close. Technical enough to deliver.",
+      "At Dev Point, we turn your business challenges into tailored digital solutions. We combine close collaboration, creativity and technical expertise to build technology that simplifies your day-to-day work and helps your business grow.",
     pillar_1_title: "Technology",
     pillar_1_text:
       "Modern tools applied with judgment. Every technical decision has a purpose.",

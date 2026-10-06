@@ -649,6 +649,13 @@ button:focus-visible {
   font-size: 1.1rem;
   max-width: 40ch;
   margin-bottom: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: rgb(18 15 23 / 75%);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-left: 3px solid var(--color_accent);
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 20%);
+  line-height: 1.7;
 }
 .about_pillars {
   display: flex;
@@ -1301,7 +1308,8 @@ button:focus-visible {
 
 .footer_bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   flex-wrap: wrap;
   gap: 1rem;
   color: var(--color_text_faint);

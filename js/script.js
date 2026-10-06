@@ -112,15 +112,21 @@ const process_data = [
 const team_data = [
   {
     initials: "YS",
+    firstName: "Ygor",
+    lastName: "Silveira",
     photo:"assets/images/ygor.jpg",
     name: "Ygor Silveira",
+    linkedin: "https://www.linkedin.com/in/ygorsoliveira/",
     role: "Desenvolvimento & Project Manager",
     bio: "Responsável pelo desenvolvimento, estrutura dos projetos, programação e soluções digitais. Garante que cada linha de código serve ao propósito do negócio.",
     skills: ["Full-Stack", "Gestão", "Arquitetura"],
   },
   {
     initials: "GK",
+    firstName: "Guilherme",
+    lastName: "Kerber",
     name: "Guilherme Severo Kerber",
+    linkedin: "https://www.linkedin.com/in/guilherme-severo-kerber-552263389/",
     photo:"assets/images/guilherme.jpg",
     role: "Desenvolvimento & Marketing",
     bio: "Responsável pelo desenvolvimento de projetos e soluções digitais, e pela divulgação da empresa através das redes sociais. Une técnica e comunicação.",
@@ -261,7 +267,7 @@ function render_team() {
   if (!grid) return;
 
   grid.innerHTML = team_data
-    .map(function (member) {
+    .map(function (member, index) {
       const skills = member.skills
         .map(function (skill) {
           return '<span class="team_skill">' + skill + "</span>";
@@ -269,16 +275,18 @@ function render_team() {
         .join("");
       return (
         '<article class="team_member reveal" data-reveal>' +
+        '<div class="team_signature" aria-hidden="true"><span>DEV POINT STUDIO<br>DESENVOLVIMENTO WEB</span><span class="team_index">0' + (index + 1) + ' / 02</span></div>' +
         '<div class="team_avatar_wrap">' +
         (member.photo
           ? '<img class="team_avatar team_avatar_img" src="' + member.photo + '" alt="' + member.name + '" loading="lazy">'
           : '<span class="team_avatar">' + member.initials + "</span>") +
         "</div>" +
         '<div class="team_body">' +
-        '<h3 class="team_name">' + member.name + "</h3>" +
+        '<h3 class="team_name" aria-label="' + member.name + '"><span>' + member.firstName + '</span><span class="team_surname">' + member.lastName + '</span></h3>' +
         '<p class="team_role">' + member.role + "</p>" +
         '<p class="team_bio">' + member.bio + "</p>" +
-        '<div class="team_skills">' + skills + "</div>" +
+        '<div class="team_skills">' + skills +
+        '<a class="team_linkedin" href="' + member.linkedin + '" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn — ' + member.name + '"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96C2 21.32 2.69 22 3.55 22h16.9c.86 0 1.55-.68 1.55-1.52V3.52C22 2.68 21.31 2 20.45 2ZM7.93 18.75H4.98V9.2h2.95v9.55ZM6.45 7.9a1.71 1.71 0 1 1 0-3.42 1.71 1.71 0 0 1 0 3.42Zm12.3 10.85H15.8v-4.64c0-1.11-.02-2.54-1.55-2.54-1.55 0-1.79 1.21-1.79 2.46v4.72H9.51V9.2h2.83v1.3h.04c.39-.74 1.36-1.52 2.79-1.52 2.98 0 3.58 1.96 3.58 4.51v5.26Z"/></svg></a></div>' +
         "</div></article>"
       );
     })
@@ -482,7 +490,9 @@ function apply_projects_language() {
   document.querySelectorAll("#projects_swap_nav .projects_swap_nav_btn").forEach(function (btn) {
     const p = items[Number(btn.dataset.navIndex)];
     if (!p) return;
-    set_text(btn, ".projects_swap_nav_number", p.number + "- " + p.name);
+    set_text(btn, ".projects_swap_nav_number", p.number);
+    set_text(btn, ".projects_swap_nav_name", p.name);
+    set_text(btn, ".projects_swap_nav_category", p.category);
     btn.setAttribute("aria-label", (is_en ? "View " : "Ver ") + p.name);
   });
 }
