@@ -507,6 +507,39 @@ if (window.i18n) {
 
 /* ----------  8. Inicialização  ---------- */
 
+// BorderGlow compartilhado pelos pilares e cards de serviços.
+function setup_border_glow() {
+  document.querySelectorAll(".about_pillar, .service_card").forEach(function (card) {
+    if (card.classList.contains("border-glow-card")) return;
+    card.classList.add("border-glow-card");
+    const light = document.createElement("span");
+    light.className = "edge-light";
+    light.setAttribute("aria-hidden", "true");
+    card.prepend(light);
+
+    card.addEventListener("pointermove", function (event) {
+      if (event.pointerType === "touch") return;
+      const rect = card.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      if (!cx || !cy) return;
+      const dx = event.clientX - rect.left - cx;
+      const dy = event.clientY - rect.top - cy;
+      const edge = Math.min(Math.max(Math.abs(dx) / cx, Math.abs(dy) / cy), 1);
+      const angle = (Math.atan2(dy, dx) * 180 / Math.PI + 450) % 360;
+      card.style.setProperty("--edge-proximity", (edge * 100).toFixed(3));
+      card.style.setProperty("--cursor-angle", angle.toFixed(3) + "deg");
+    });
+
+    card.addEventListener("pointerleave", function () {
+      card.style.setProperty("--edge-proximity", "0");
+    });
+    card.addEventListener("pointercancel", function () {
+      card.style.setProperty("--edge-proximity", "0");
+    });
+  });
+}
+
 function init() {
   render_services();
   render_projects();
@@ -517,6 +550,7 @@ function init() {
 
   setup_mobile_menu();
   setup_header_scroll();
+  setup_border_glow();
 
   // Se o visitante já tinha escolhido inglês, traduz o conteúdo recém-renderizado.
   apply_data_language();

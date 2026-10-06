@@ -557,15 +557,14 @@ button:focus-visible {
 .services_grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--color_border);
-  border-radius: var(--radius_lg);
-  overflow: hidden;
-  background: var(--color_bg_soft);
+  gap: 1rem;
 }
 .service_card {
   padding: 2.5rem 2rem;
-  border-right: 1px solid var(--color_border_soft);
-  border-bottom: 1px solid var(--color_border_soft);
+  min-width: 0;
+  border: 1px solid var(--color_border_soft);
+  border-radius: 28px;
+  background: var(--color_bg_soft);
   position: relative;
   transition: background-color var(--speed_base) var(--ease_out);
 }
