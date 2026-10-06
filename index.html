@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="css/border-glow.css" />
   <link rel="stylesheet" href="css/responsive.css" />
   <link rel="stylesheet" href="css/team.css" />
-  <link rel="stylesheet" href="css/depth-text.css" />
+  <link rel="stylesheet" href="css/logo-cube.css" />
   <link rel="stylesheet" href="css/card-swap.css" />
 
   <!-- ogl (WebGL) via import map (sem bundler/npm) -->
@@ -103,10 +103,14 @@
 
       <div class="container hero_content">
 
-        <h1 class="hero_title reveal" data-reveal>
-          <span class="hero_title_line"><span id="hero_depth_line_1">Dev Point</span></span>
-          <span class="hero_title_line"><span id="hero_depth_line_2">Studio</span></span>
-        </h1>
+        <h1 class="hero_brand_title">Dev Point Studio</h1>
+        <div class="hero_logo_cube reveal" id="hero_logo_cube" data-reveal role="img" aria-label="Logo da Dev Point Studio em 3D">
+          <img class="hero_logo_fallback" src="assets/images/logo.png" alt="" />
+          <div class="hero_wordmark" aria-hidden="true">
+            <span class="hero_wordmark_line"><span>Dev</span> <span>Point</span></span>
+            <span class="hero_wordmark_studio">Studio</span>
+          </div>
+        </div>
 
         <p class="hero_lead reveal" data-reveal data-i18n="hero_lead">Transformamos ideias em soluções digitais.</p>
         <p class="hero_text reveal" data-reveal data-i18n="hero_text">
@@ -335,6 +339,6 @@
   <script src="js/card-swap.js"></script>
   <script src="js/script.js"></script>
   <script type="module" src="js/ripple-grid-init.js"></script>
-  <script type="module" src="js/depth-text-init.js"></script>
+  <script type="module" src="js/logo-cube.js"></script>
 </body>
 </html>
