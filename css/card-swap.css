@@ -324,3 +324,8 @@
     transition: none;
   }
 }
+
+.card-swap-cta { width: 44px; height: 44px; }
+.card-swap-fallback { position: static; transform: none; width: 100%; height: auto; display: grid; gap: 1rem; }
+.card-swap-fallback .card-swap-card { position: relative; inset: auto; width: 100%; height: 440px; transform: none; }
+.card-swap-stage:has(.card-swap-fallback) { height: auto; overflow: visible; }

@@ -7,11 +7,15 @@
 
 import { createRippleGrid } from "./ripple-grid.js";
 
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
 const mount = document.getElementById("hero_ripple_grid");
+let grid = null;
 
-if (mount && !prefersReducedMotion) {
-  createRippleGrid(mount, {
+function updateGrid() {
+  const paused = preference.matches || document.body.dataset.motionPaused === 'true';
+  if (paused && grid) { grid.destroy(); grid = null; }
+  if (!mount || paused || grid) return;
+  grid = createRippleGrid(mount, {
     enableRainbow: false,
     gridColor: "#9b031d",
     rippleIntensity: 0.05,
@@ -26,3 +30,6 @@ if (mount && !prefersReducedMotion) {
     gridRotation: 0,
   });
 }
+document.addEventListener('site-motion-change', updateGrid);
+preference.addEventListener('change', updateGrid);
+updateGrid();

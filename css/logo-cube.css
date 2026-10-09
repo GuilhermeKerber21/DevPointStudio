@@ -9,6 +9,12 @@
   white-space: nowrap;
 }
 .hero_logo_cube {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
   position: relative;
   width: min(100%, 560px);
   height: clamp(300px, 46vh, 460px);

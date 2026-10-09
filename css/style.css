@@ -1071,7 +1071,8 @@ button:focus-visible {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+  grid-template-columns: minmax(0, 1fr);
+  text-align: center;
   align-items: end;
   gap: 3rem;
   margin-bottom: 3rem;
@@ -1080,7 +1081,7 @@ button:focus-visible {
   position: relative;
   z-index: 1;
   max-width: 980px;
-  margin-left: 0 auto;
+  margin-inline: auto;
 }
 .faq_item {
   border-top: 1px solid var(--color_border_soft);
@@ -1335,6 +1336,14 @@ button:focus-visible {
 .reveal.is_visible {
   opacity: 1;
   transform: translateY(0);
+}
+.reveal:focus-within { opacity: 1; transform: none; }
+[hidden] { display: none !important; }
+.faq_heading { font: inherit; line-height: inherit; letter-spacing: inherit; }
+section, main { scroll-margin-top: 96px; }
+.team_linkedin { min-width: 44px; min-height: 44px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
 }
 
 /* ----------  18. Redução de movimento  ---------- */

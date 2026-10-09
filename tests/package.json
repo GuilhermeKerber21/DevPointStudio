@@ -1,0 +1,12 @@
+{
+  "name": "dev-point-accessibility-checks",
+  "private": true,
+  "scripts": {
+    "test": "node accessibility.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "html-validate": "^11.16.2",
+    "playwright": "^1.64.0"
+  }
+}

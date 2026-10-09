@@ -346,8 +346,7 @@
     if (!toggle) return;
     var is_en = current === "en";
     toggle.classList.toggle("is_en", is_en);
-    toggle.setAttribute("aria-checked", String(is_en));
-    var label = is_en ? t("lang_toggle_to_pt") : t("lang_toggle_to_en");
+    var label = "PT EN: " + (is_en ? t("lang_toggle_to_pt") : t("lang_toggle_to_en"));
     toggle.setAttribute("aria-label", label);
     toggle.setAttribute("title", label);
   }

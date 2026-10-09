@@ -302,12 +302,12 @@ function render_faq() {
       const is_open = index === 0;
       return (
         '<article class="faq_item reveal' + (is_open ? ' is_open' : '') + '" data-reveal>' +
-        '<button class="faq_question" type="button" aria-expanded="' + is_open + '" aria-controls="faq_answer_' + index + '">' +
-        '<span class="faq_question_number">' + String(index + 1).padStart(2, "0") + '</span>' +
+        '<h3 class="faq_heading"><button class="faq_question" id="faq_question_' + index + '" type="button" aria-expanded="' + is_open + '" aria-controls="faq_answer_' + index + '">' +
+        '<span class="faq_question_number" aria-hidden="true">' + String(index + 1).padStart(2, "0") + '</span>' +
         '<span class="faq_question_text">' + item.question + '</span>' +
         '<span class="faq_toggle" aria-hidden="true"><span></span><span></span></span>' +
-        '</button>' +
-        '<div class="faq_answer_wrap" id="faq_answer_' + index + '">' +
+        '</button></h3>' +
+        '<div class="faq_answer_wrap" role="region" aria-labelledby="faq_question_' + index + '" id="faq_answer_' + index + '"' + (is_open ? '' : ' hidden') + '>' +
         '<div class="faq_answer"><p>' + item.answer + '</p></div>' +
         '</div>' +
         '</article>'
@@ -324,11 +324,13 @@ function render_faq() {
         open_item.classList.remove("is_open");
         const open_button = open_item.querySelector(".faq_question");
         if (open_button) open_button.setAttribute("aria-expanded", "false");
+        open_item.querySelector(".faq_answer_wrap").hidden = true;
       });
 
       if (!is_open) {
         item.classList.add("is_open");
         button.setAttribute("aria-expanded", "true");
+        item.querySelector(".faq_answer_wrap").hidden = false;
       }
     });
   });
@@ -345,34 +347,46 @@ function menu_label(is_open) {
 function setup_mobile_menu() {
   const toggle = document.getElementById("menu_toggle");
   const nav = document.getElementById("main_nav");
+  const header = document.getElementById("site_header");
+  const breakpoint = window.matchMedia("(max-width: 720px)");
   if (!toggle || !nav) return;
+  const background = [document.getElementById("main_content"), document.querySelector(".site_footer")];
 
-  function close_menu() {
+  function close_menu(restoreFocus = false) {
     nav.classList.remove("is_open");
+    nav.inert = breakpoint.matches;
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", menu_label(false));
     document.body.classList.remove("menu_open");
+    background.forEach(element => { if (element) element.inert = false; });
+    if (restoreFocus) toggle.focus();
   }
-
+  close_menu();
   toggle.addEventListener("click", function () {
-    const is_open = nav.classList.toggle("is_open");
-    toggle.setAttribute("aria-expanded", String(is_open));
-    toggle.setAttribute("aria-label", menu_label(is_open));
-    document.body.classList.toggle("menu_open", is_open);
+    if (nav.classList.contains("is_open")) { close_menu(true); return; }
+    nav.inert = false;
+    nav.classList.add("is_open");
+    toggle.setAttribute("aria-expanded", "true");
+    toggle.setAttribute("aria-label", menu_label(true));
+    document.body.classList.add("menu_open");
+    background.forEach(element => { if (element) element.inert = true; });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (nav.classList.contains("is_open")) nav.querySelector("a").focus();
+    }));
   });
-
-  nav.querySelectorAll("a").forEach(function (link) {
-    link.addEventListener("click", close_menu);
-  });
+  nav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => close_menu(true)));
+  header.querySelector('.brand').addEventListener('click', () => close_menu());
   document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && nav.classList.contains("is_open")) {
-      close_menu();
-      toggle.focus();
-    }
+    if (!nav.classList.contains("is_open")) return;
+    if (event.key === "Escape") { close_menu(true); return; }
+    if (event.key !== "Tab") return;
+    const controls = Array.from(header.querySelectorAll('a[href], button:not([disabled])')).filter(el => el.getClientRects().length && !el.closest('[inert]'));
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   });
-  window.matchMedia("(max-width: 720px)").addEventListener("change", function (event) {
-    if (!event.matches) close_menu();
-  });
+  breakpoint.addEventListener("change", function () { close_menu(); });
 }
 
 /* ----------  5. Header com fundo ao rolar  ---------- */
@@ -484,7 +498,7 @@ function apply_projects_language() {
     if (!p) return;
     set_text(card, ".card-swap-name", p.name);
     set_text(card, ".card-swap-category", p.category);
-    card.setAttribute("aria-label", (is_en ? "Open " : "Abrir ") + p.name);
+    card.setAttribute("aria-label", p.name);
 
     const img = card.querySelector("img");
     if (img) {
@@ -502,7 +516,7 @@ function apply_projects_language() {
     set_text(btn, ".projects_swap_nav_number", p.number);
     set_text(btn, ".projects_swap_nav_name", p.name);
     set_text(btn, ".projects_swap_nav_category", p.category);
-    btn.setAttribute("aria-label", (is_en ? "View " : "Ver ") + p.name);
+    btn.removeAttribute("aria-label");
   });
 }
 

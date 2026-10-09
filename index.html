@@ -48,13 +48,13 @@
   <header class="site_header" id="site_header">
     <div class="container header_inner">
       <a class="brand" href="#hero" aria-label="Dev Point Studio — início" data-i18n-attr="aria-label:brand_label">
-        <img class="brand_mark" src="assets/images/logo.png" alt="Dev Point Studio">
+        <img class="brand_mark" src="assets/images/logo.png" alt="">
         <span class="brand_name"><strong>Dev Point</strong> Studio</span>
       </a>
 
       <div class="header_right">
       <nav class="main_nav" id="main_nav" aria-label="Navegação principal" data-i18n-attr="aria-label:nav_label">
-        <ul class="nav_list">
+        <ul role="list" class="nav_list">
           <li><a href="#services" data-i18n="nav_services">Serviços</a></li>
           <li><a href="#about" data-i18n="nav_about">Sobre</a></li>
           <li><a href="#projects" data-i18n="nav_projects">Projetos</a></li>
@@ -82,7 +82,7 @@
       </nav>
 
 
-      <button class="lang_toggle" id="lang_toggle" type="button" role="switch" aria-checked="false"
+      <button class="lang_toggle" id="lang_toggle" type="button"
         aria-label="Mudar idioma para inglês" title="Mudar idioma para inglês">
         <span class="lang_toggle_label lang_toggle_label_pt" aria-hidden="true">PT</span>
         <span class="lang_toggle_label lang_toggle_label_en" aria-hidden="true">EN</span>
@@ -106,28 +106,28 @@
         </span>
       </button>
 
-      <button class="menu_toggle" id="menu_toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="main_nav">
+      <button class="menu_toggle" id="menu_toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="main_nav">
         <span></span><span></span><span></span>
       </button>
     </div>
     </div>
   </header>
 
-  <main id="main_content">
+  <main id="main_content" tabindex="-1">
     <!-- ===================== HERO ===================== -->
-    <section class="hero_section" id="hero">
+    <section class="hero_section" aria-labelledby="hero-title" id="hero">
       <div class="hero_ripple_grid" id="hero_ripple_grid" aria-hidden="true"></div>
 
       <div class="container hero_content">
 
-        <h1 class="hero_brand_title">Dev Point Studio</h1>
-        <div class="hero_logo_cube reveal" id="hero_logo_cube" data-reveal role="img" aria-label="Logo da Dev Point Studio em 3D">
+        <h1 id="hero-title" class="hero_brand_title">Dev Point Studio</h1>
+        <button class="hero_logo_cube reveal" id="hero_logo_cube" type="button" data-reveal aria-label="Animar a logo da Dev Point Studio" disabled>
           <img class="hero_logo_fallback" src="assets/images/logo.png" alt="" />
-          <div class="hero_wordmark" aria-hidden="true">
+          <span class="hero_wordmark" aria-hidden="true">
             <span class="hero_wordmark_line"><span>Dev</span> <span>Point</span></span>
             <span class="hero_wordmark_studio">Studio</span>
-          </div>
-        </div>
+          </span>
+        </button>
 
         <p class="hero_lead reveal" data-reveal data-i18n="hero_lead">Transformamos ideias em soluções digitais.</p>
         <p class="hero_text reveal" data-reveal data-i18n="hero_text">
@@ -143,14 +143,15 @@
           <a class="button button_ghost" href="#projects" data-i18n="hero_see_projects">Ver projetos</a>
         </div>
 
+
       </div>
     </section>
 
     <!-- ===================== SERVICES ===================== -->
-    <section class="services_section section" id="services">
+    <section class="services_section section" aria-labelledby="services_title" id="services">
       <div class="container">
         <header class="services_header">
-          <h2 class="section_title reveal" data-reveal data-i18n-html="services_title">Soluções digitais<br />pensadas para cada<br />necessidade.</h2>
+          <h2 id="services_title" class="section_title reveal" data-reveal data-i18n-html="services_title">Soluções digitais<br />pensadas para cada<br />necessidade.</h2>
           <p class="section_desc reveal" data-reveal data-i18n="services_desc">Do simples ao complexo, cada projeto recebe atenção e cuidado do início ao fim.</p>
         </header>
 
@@ -161,12 +162,12 @@
     </section>
 
     <!-- ===================== ABOUT ===================== -->
-    <section class="about_section section" id="about">
+    <section class="about_section section" aria-labelledby="about_title" id="about">
       <span class="about_ghost" aria-hidden="true" data-i18n="about_ghost">TECNOLOGIA</span>
       <div class="container">
         <div class="about_intro">
           <p class="section_kicker reveal" data-reveal data-i18n="about_kicker"> > Sobre a Dev Point</p>
-          <h2 class="section_title about_title reveal" data-reveal data-i18n-html="about_title">
+          <h2 id="about_title" class="section_title about_title reveal" data-reveal data-i18n-html="about_title">
             Tecnologia não é apenas código.
             <span class="muted_text">É uma ferramenta para resolver problemas.</span>
           </h2>
@@ -186,7 +187,7 @@
             </a>
           </div>
 
-          <ul class="about_pillars">
+          <ul role="list" class="about_pillars">
             <li class="about_pillar reveal" data-reveal>
               <span class="pillar_number">01</span>
               <div>
@@ -214,23 +215,23 @@
     </section>
 
     <!-- ===================== PROJECTS ===================== -->
-    <section class="projects_section section" id="projects">
+    <section class="projects_section section" aria-labelledby="projects_title" id="projects">
       <div class="container">
         <header class="projects_header">
           <div>
             <p class="section_kicker reveal" data-reveal data-i18n="projects_kicker"> > Projetos</p>
-            <h2 class="section_title reveal" data-reveal data-i18n-html="projects_title">Projetos que saíram do<br />papel.</h2>
+            <h2 id="projects_title" class="section_title reveal" data-reveal data-i18n-html="projects_title">Projetos que saíram do<br />papel.</h2>
           </div>
         </header>
 
         <div class="projects_layout projects_layout_swap">
           <div class="projects_intro_copy">
-            <ul class="projects_swap_nav" id="projects_swap_nav" aria-label="Selecionar projeto em destaque" data-i18n-attr="aria-label:projects_nav_label">
+            <ul role="list" class="projects_swap_nav" id="projects_swap_nav" aria-label="Selecionar projeto em destaque" data-i18n-attr="aria-label:projects_nav_label">
               <!-- Botões injetados via js/card-swap.js -->
             </ul>
           </div>
 
-          <div class="card-swap-stage" aria-label="Projetos em destaque" data-i18n-attr="aria-label:projects_stage_label">
+          <div role="group" class="card-swap-stage" aria-label="Projetos em destaque" data-i18n-attr="aria-label:projects_stage_label">
             <div class="card-swap-container" id="projects_card_swap"></div>
           </div>
         </div>
@@ -238,21 +239,21 @@
     </section>
 
     <!-- ===================== PROCESS ===================== -->
-    <section class="process_section section" id="process">
+    <section class="process_section section" aria-labelledby="process_title" id="process">
       <div class="container">
         <p class="section_kicker reveal" data-reveal data-i18n="process_kicker"> > Processo</p>
-        <h2 class="section_title reveal" data-reveal data-i18n="process_title">Da ideia ao produto.</h2>
+        <h2 id="process_title" class="section_title reveal" data-reveal data-i18n="process_title">Da ideia ao produto.</h2>
 
-        <ol class="process_timeline" id="process_timeline">
+        <ol role="list" class="process_timeline" id="process_timeline">
           <!-- Etapas injetadas via js/script.js -->
         </ol>
       </div>
     </section>
 
     <!-- ===================== TEAM ===================== -->
-    <section class="team_section section" id="team">
+    <section class="team_section section" aria-labelledby="team_title" id="team">
       <div class="container">
-        <h2 class="section_title reveal" data-reveal data-i18n="team_title">Por trás da Dev Point.</h2>
+        <h2 id="team_title" class="section_title reveal" data-reveal data-i18n="team_title">Por trás da Dev Point.</h2>
 
         <div class="team_grid" id="team_grid">
           <!-- Membros injetados via js/script.js -->
@@ -262,12 +263,12 @@
     </section>
 
     <!-- ===================== FAQ ===================== -->
-    <section class="faq_section section" id="faq">
+    <section class="faq_section section" aria-labelledby="faq_title" id="faq">
       <div class="container">
         <div class="faq_header">
           <div>
             <p class="section_kicker reveal" data-reveal data-i18n="faq_kicker"> > Perguntas frequentes</p>
-            <h2 class="section_title reveal" data-reveal data-i18n-html="faq_title">
+            <h2 id="faq_title" class="section_title reveal" data-reveal data-i18n-html="faq_title">
               Dúvidas? <span class="accent_gradient">A gente responde.</span>
             </h2>
           </div>
@@ -280,11 +281,11 @@
     </section>
 
     <!-- ===================== CONTACT / CTA ===================== -->
-    <section class="contact_section section" id="contact">
+    <section class="contact_section section" aria-labelledby="contact_title" id="contact">
       <div class="contact_grid_bg" aria-hidden="true"></div>
       <div class="container contact_content">
         <p class="section_kicker reveal" data-reveal data-i18n="contact_kicker"> > Próximo passo</p>
-        <h2 class="contact_title reveal" data-reveal data-i18n-html="contact_title">
+        <h2 id="contact_title" class="contact_title reveal" data-reveal data-i18n-html="contact_title">
           Tem uma ideia?<br /><span class="accent_gradient">Vamos transformar.</span>
         </h2>
         <p class="section_desc reveal" data-reveal data-i18n="contact_desc">Conte o que você precisa. A gente pensa no próximo passo.</p>
@@ -311,7 +312,7 @@
     <div class="container footer_top">
       <div class="footer_brand">
         <a class="brand" href="#hero" aria-label="Dev Point Studio — início" data-i18n-attr="aria-label:brand_label">
-          <img class="brand_mark" src="assets/images/logo.png" alt="Dev Point Studio">
+          <img class="brand_mark" src="assets/images/logo.png" alt="">
           <span class="brand_name"><strong>Dev Point</strong> Studio</span>
         </a>
         <p class="footer_tagline" data-i18n="footer_tagline">Transformamos ideias em soluções digitais.</p>
@@ -336,7 +337,7 @@
       </div>
 
       <nav class="footer_nav" aria-label="Rodapé" data-i18n-attr="aria-label:footer_nav_label">
-        <ul>
+        <ul role="list">
           <li><a href="#services" data-i18n="nav_services">Serviços</a></li>
           <li><a href="#projects" data-i18n="nav_projects">Projetos</a></li>
           <li><a href="#process" data-i18n="nav_process">Processo</a></li>
@@ -355,6 +356,7 @@
   <script src="js/i18n.js"></script>
   <script src="js/card-swap.js"></script>
   <script src="js/script.js"></script>
+  <script src="js/accessibility.js"></script>
   <script type="module" src="js/ripple-grid-init.js"></script>
   <script type="module" src="js/logo-cube.js"></script>
 </body>

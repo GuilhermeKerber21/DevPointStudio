@@ -8,7 +8,7 @@
   "use strict";
 
   window.initCardSwap = function (container, projects, navContainer) {
-    if (!container || !projects || projects.length < 2 || typeof window.gsap === "undefined") return;
+    if (!container || !projects || projects.length < 2) return;
 
     var cardDistance = 48;
     var verticalDistance = 58;
@@ -21,7 +21,7 @@
         return '<span class="card-swap-tag">' + tech + '</span>';
       }).join("");
 
-      return '<article class="card-swap-card" data-card-index="' + index + '" tabindex="0" role="button" aria-label="Abrir ' + project.name + '">' +
+      return '<article class="card-swap-card" data-card-index="' + index + '">' +
         '<img src="' + project.image + '" alt="Pré-visualização do ' + project.name + ' — ' + project.category + '" loading="lazy">' +
         '<div class="card-swap-content">' +
           '<div class="card-swap-content_top">' +
@@ -30,9 +30,9 @@
               '<h3 class="card-swap-name">' + project.name + '</h3>' +
               '<span class="card-swap-category">' + project.category + '</span>' +
             '</div>' +
-            '<button type="button" class="card-swap-cta" data-card-cta="' + index + '" aria-label="Ver ' + project.name + '">' +
+            '<a class="card-swap-cta" href="' + project.link + '"' + (project.link.startsWith('#') ? '' : ' target="_blank" rel="noopener noreferrer"') + ' aria-label="Ver ' + project.name + '">' +
               '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>' +
-            '</button>' +
+            '</a>' +
           '</div>' +
           '<div class="card-swap-tags">' + tags + '</div>' +
         '</div>' +
@@ -43,13 +43,13 @@
     var order = cards.map(function (_, i) { return i; });
     var timer = null;
     var timeline = null;
-    var isRunning = true;
+    var isRunning = !reduceMotion && document.body.dataset.motionPaused !== 'true';
 
     var navButtons = [];
     if (navContainer) {
       navContainer.innerHTML = projects.map(function (project, index) {
         return '<li>' +
-          '<button type="button" class="projects_swap_nav_btn' + (index === 0 ? ' is_active' : '') + '" data-nav-index="' + index + '" aria-label="Ver ' + project.name + '">' +
+          '<button type="button" class="projects_swap_nav_btn' + (index === 0 ? ' is_active' : '') + '" data-nav-index="' + index + '">' +
             '<span class="projects_swap_nav_number">' + project.number + '</span>' +
             '<span class="projects_swap_nav_details"><span class="projects_swap_nav_name">' + project.name + '</span><span class="projects_swap_nav_category">' + project.category + '</span></span>' +
             '<span class="projects_swap_nav_arrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>' +
@@ -59,7 +59,17 @@
       navButtons = Array.prototype.slice.call(navContainer.querySelectorAll(".projects_swap_nav_btn"));
     }
 
+    if (typeof window.gsap === 'undefined') {
+      container.classList.add('card-swap-fallback');
+      if (navContainer) navContainer.hidden = true;
+      return;
+    }
+
     function setActiveNav(index) {
+      cards.forEach(function (card, cardIndex) {
+        card.inert = cardIndex !== index;
+        card.setAttribute('aria-hidden', String(cardIndex !== index));
+      });
       navButtons.forEach(function (btn) {
         btn.classList.toggle("is_active", Number(btn.dataset.navIndex) === index);
         btn.setAttribute("aria-pressed", String(Number(btn.dataset.navIndex) === index));
@@ -91,15 +101,6 @@
 
     cards.forEach(function (card, i) { placeNow(card, slot(i)); });
 
-    function openProject(index) {
-      var project = projects[index];
-      if (!project || !project.link || project.link === "#contact") {
-        if (project && project.link === "#contact") window.location.hash = "contact";
-        return;
-      }
-      window.open(project.link, "_blank", "noopener,noreferrer");
-    }
-
     function goTo(index) {
       if (!cards[index] || order[0] === index) return;
 
@@ -117,7 +118,7 @@
           y: target.y,
           z: target.z,
           zIndex: target.zIndex,
-          duration: reduceMotion ? 0.2 : 0.9,
+          duration: reduceMotion ? 0 : 0.9,
           ease: reduceMotion ? "none" : "power3.out"
         });
       });
@@ -133,22 +134,8 @@
     });
 
     cards.forEach(function (card) {
-      card.addEventListener("click", function () {
-        openProject(Number(card.dataset.cardIndex));
-      });
-      card.addEventListener("keydown", function (event) {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          openProject(Number(card.dataset.cardIndex));
-        }
-      });
-    });
-
-    var ctaButtons = Array.prototype.slice.call(container.querySelectorAll(".card-swap-cta"));
-    ctaButtons.forEach(function (btn) {
-      btn.addEventListener("click", function (event) {
-        event.stopPropagation();
-        openProject(Number(btn.dataset.cardCta));
+      card.addEventListener('click', function (event) {
+        if (!event.target.closest('a')) card.querySelector('a').click();
       });
     });
 
@@ -211,7 +198,7 @@
 
     function pause() {
       isRunning = false;
-      if (timeline) timeline.pause();
+      if (timeline) timeline.progress(1);
       window.clearTimeout(timer);
     }
 
@@ -222,11 +209,20 @@
       schedule();
     }
 
-    // O comportamento padrão segue o componente enviado: a pilha não pausa ao passar o mouse.
-    if (!reduceMotion) {
-      swap();
-      schedule();
+    setActiveNav(order[0]);
+    const section = container.closest('section');
+    section.addEventListener('focusin', pause);
+    section.addEventListener('mouseenter', pause);
+    function motionChanged(event) {
+      if (event.detail.paused || reduceMotion) pause();
+      else if (!section.contains(document.activeElement)) resume();
     }
+    document.addEventListener('site-motion-change', motionChanged);
+    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', function (event) {
+      reduceMotion = event.matches;
+      if (reduceMotion) pause();
+    });
+    if (isRunning) schedule();
 
     container._cardSwapCleanup = function () {
       window.clearTimeout(timer);

@@ -84,7 +84,7 @@ function mountLogo(host) {
 
   function render(time) {
     frame = 0;
-    if (!visible || document.hidden || motion.matches || transformed) return;
+    if (!visible || document.hidden || motion.matches || document.body.dataset.motionPaused === 'true' || transformed) return;
     const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0;
     lastTime = time;
     elapsed += dt;
@@ -118,7 +118,7 @@ function mountLogo(host) {
     frame = 0;
     lastTime = 0;
     if (transformed) return;
-    if (motion.matches) {
+    if (motion.matches || document.body.dataset.motionPaused === 'true') {
       spinPivot.rotation.y = 0;
       logo.rotation.set(0, 0, 0);
       logo.position.set(0, 0, 0);
@@ -129,16 +129,17 @@ function mountLogo(host) {
     frame = 0;
     transitioning = false;
     host.removeAttribute('aria-busy');
+    host.disabled = false;
     if (direction < 0) {
       transition.restore();
       transition = null;
       transformed = false;
       host.classList.remove('is_wordmark');
-      host.setAttribute('aria-label', 'Clique para revelar o nome Dev Point Studio');
+      labelLogo();
       resume();
     } else {
       transformed = true;
-      host.setAttribute('aria-label', 'Clique para remontar o cubo da Dev Point Studio');
+      labelLogo();
     }
   }
 
@@ -156,7 +157,7 @@ function mountLogo(host) {
   }
 
   function revealName() {
-    if (transitioning || !visible) return;
+    if (transitioning) return;
     if (frame) cancelAnimationFrame(frame);
     frame = 0;
     direction = transformed ? -1 : 1;
@@ -176,20 +177,22 @@ function mountLogo(host) {
       finishTransition();
     } else frame = requestAnimationFrame(animateTransition);
   }
-  host.setAttribute('role', 'button');
-  host.setAttribute('tabindex', '0');
+  host.disabled = false;
   host.setAttribute('aria-label', 'Clique para revelar o nome Dev Point Studio');
   host.addEventListener('click', revealName);
-  host.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      revealName();
-    }
-  });
   const intersectionObserver = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; resume(); });
   intersectionObserver.observe(host);
   document.addEventListener('visibilitychange', resume);
   motion.addEventListener('change', resume);
+  document.addEventListener('site-motion-change', resume);
+  function labelLogo() {
+    const english = window.i18n && window.i18n.lang === 'en';
+    host.setAttribute('aria-label', english
+      ? (transformed ? 'Reassemble the Dev Point Studio cube' : 'Animate the Dev Point Studio logo')
+      : (transformed ? 'Remontar o cubo da Dev Point Studio' : 'Animar a logo da Dev Point Studio'));
+  }
+  if (window.i18n) window.i18n.on_change(labelLogo);
+  labelLogo();
   renderer.domElement.addEventListener('webglcontextlost', (event) => {
     event.preventDefault();
     visible = false;
@@ -198,6 +201,7 @@ function mountLogo(host) {
     frame = 0;
     transitioning = false;
     host.removeAttribute('aria-busy');
+    host.disabled = true;
     host.classList.remove('is_ready', 'is_wordmark');
     renderer.domElement.style.display = 'none';
   });
