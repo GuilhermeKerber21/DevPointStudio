@@ -67,10 +67,13 @@ function letterS() {
 export function createLogoCube() {
   const group = new THREE.Group();
   group.name = 'Dev Point Studio';
-  const white = new THREE.MeshPhysicalMaterial({ color: '#e8e9ed', roughness: 0.22, metalness: 0.88, clearcoat: 1, clearcoatRoughness: 0.16, envMapIntensity: 1.25 });
-  const red = new THREE.MeshPhysicalMaterial({ color: '#e60016', roughness: 0.2, metalness: 0.65, clearcoat: 1, clearcoatRoughness: 0.12, envMapIntensity: 1.1 });
-  const dark = new THREE.MeshStandardMaterial({ color: '#08080b', roughness: 0.27, metalness: 0.55 });
-  const core = new THREE.Mesh(new THREE.BoxGeometry(1.94, 1.94, 1.94), dark);
+  const white = new THREE.MeshPhysicalMaterial({ color: '#f3f4f7', roughness: 0.22, metalness: 0.78, clearcoat: 1, clearcoatRoughness: 0.16, envMapIntensity: 1.25 });
+  const red = new THREE.MeshPhysicalMaterial({ color: '#ed0016', roughness: 0.23, metalness: 0.2, clearcoat: 1, clearcoatRoughness: 0.12, envMapIntensity: 0.95 });
+  // Núcleo recuado em grafite para dar contraste aos recortes das letras DPS.
+  const coreMaterial = new THREE.MeshStandardMaterial({
+    color: '#17171e', roughness: 0.85, metalness: 0.05, envMapIntensity: 0.25,
+  });
+  const core = new THREE.Mesh(new THREE.BoxGeometry(1.88, 1.88, 1.88), coreMaterial);
   core.name = 'cube-core';
   group.add(core);
 
@@ -93,10 +96,14 @@ export function createLogoCube() {
   right.rotation.y = Math.PI / 2;
   right.position.x = 1;
 
-  // O ponto vermelho separado no canto inferior é parte da identidade da marca.
-  const dot = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.28, 0.08), red);
+  // O ponto mantém seu tamanho e fica encaixado na base da haste do P.
+  left.geometry.computeBoundingBox();
+  const pBounds = left.geometry.boundingBox;
+  const dotDepth = pBounds.max.z - pBounds.min.z;
+  const dotCenterZ = left.position.z + (pBounds.min.z + pBounds.max.z) / 2;
+  const dot = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.28, dotDepth), red);
   dot.name = 'brand-dot';
-  dot.position.set(-0.76, -1.24, 1.035);
+  dot.position.set(-0.76, left.position.y + pBounds.min.y - 0.14, dotCenterZ);
   group.add(dot);
   return group;
 }

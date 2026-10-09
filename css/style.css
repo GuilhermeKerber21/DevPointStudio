@@ -306,6 +306,7 @@ button:focus-visible {
   align-items: center;
   gap: 2.5rem;
 }
+.nav_socials { display: none; }
 .nav_list {
   display: flex;
   gap: 2rem;

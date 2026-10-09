@@ -364,6 +364,15 @@ function setup_mobile_menu() {
   nav.querySelectorAll("a").forEach(function (link) {
     link.addEventListener("click", close_menu);
   });
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && nav.classList.contains("is_open")) {
+      close_menu();
+      toggle.focus();
+    }
+  });
+  window.matchMedia("(max-width: 720px)").addEventListener("change", function (event) {
+    if (!event.matches) close_menu();
+  });
 }
 
 /* ----------  5. Header com fundo ao rolar  ---------- */

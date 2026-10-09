@@ -84,43 +84,10 @@
 }
 .hero_logo_cube.is_wordmark { cursor: pointer; }
 .is_wordmark .hero_wordmark { visibility: visible; }
-.is_wordmark canvas { animation: cube-dissolve 0.9s ease-in forwards; pointer-events: none; }
-.is_wordmark .hero_wordmark_line > span,
-.is_wordmark .hero_wordmark_studio {
-  opacity: 0;
-  animation: wordmark-arrive 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.is_wordmark .hero_wordmark_line > span:first-child { animation-delay: 0.45s; }
-.is_wordmark .hero_wordmark_line > span:last-child { animation-delay: 0.6s; }
-.is_wordmark .hero_wordmark_studio { animation-delay: 0.75s; }
-.is_returning canvas { animation: cube-arrive 0.9s ease-out 0.3s both; }
-.is_returning .hero_wordmark_line > span,
-.is_returning .hero_wordmark_studio { animation: wordmark-depart 0.6s ease-in both; }
-.is_returning .hero_wordmark_line > span:first-child { animation-delay: 0.12s; }
-.is_returning .hero_wordmark_line > span:last-child { animation-delay: 0.06s; }
-.is_returning .hero_wordmark_studio { animation-delay: 0s; }
-@keyframes cube-arrive {
-  from { opacity: 0; filter: blur(12px); visibility: visible; }
-  to { opacity: 1; filter: blur(0); visibility: visible; }
-}
-@keyframes wordmark-depart {
-  from { opacity: 1; filter: blur(0); transform: translate3d(0, 0, 0) rotateX(0) scale(1); }
-  to { opacity: 0; filter: blur(14px); transform: translate3d(0, -45px, -160px) rotateX(65deg) scale(0.65); }
-}
-@keyframes cube-dissolve {
-  0%, 20% { opacity: 1; filter: blur(0); }
-  100% { opacity: 0; filter: blur(12px); visibility: hidden; }
-}
-@keyframes wordmark-arrive {
-  from { opacity: 0; filter: blur(14px); transform: translate3d(0, 45px, -160px) rotateX(-65deg) scale(0.65); }
-  65% { opacity: 1; filter: blur(0); }
-  to { opacity: 1; filter: blur(0); transform: translate3d(0, 0, 0) rotateX(0) scale(1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .is_wordmark canvas { animation: none; display: none; }
-  .is_wordmark .hero_wordmark_line > span,
-  .is_wordmark .hero_wordmark_studio { animation: none; opacity: 1; }
-}
+.hero_wordmark_line > span,
+.hero_wordmark_studio { opacity: 0; will-change: transform, opacity; }
 @media (max-width: 720px) {
   .hero_logo_cube { height: 320px; margin-bottom: 1.25rem; }
+  .hero_wordmark_line { font-size: clamp(2.7rem, 9.5vw, 4.5rem); }
+  .hero_wordmark_studio { font-size: clamp(4rem, 13vw, 6rem); }
 }

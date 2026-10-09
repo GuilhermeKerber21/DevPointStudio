@@ -1,5 +1,6 @@
 import * as THREE from './vendor/three.module.js';
 import { createLogoCube } from './logo-cube-model.js';
+import { createLogoTransition, TRANSITION_DURATION } from './logo-transition.js';
 
 const host = document.getElementById('hero_logo_cube');
 if (host) {
@@ -40,14 +41,14 @@ function mountLogo(host) {
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 30);
   camera.position.set(4.6, 3.6, 4.6);
   camera.lookAt(0, -0.08, 0);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x181820, 0.7));
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x34343c, 0.85));
   const key = new THREE.DirectionalLight(0xffffff, 2.5);
   key.position.set(3, 6, 5);
   scene.add(key);
-  const fill = new THREE.DirectionalLight(0xffffff, 1.1);
+  const fill = new THREE.DirectionalLight(0xffffff, 1.4);
   fill.position.set(-4, 1, 4);
   scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xff153a, 2.5);
+  const rim = new THREE.DirectionalLight(0xffe9e9, 1.8);
   rim.position.set(1, 3, -4);
   scene.add(rim);
   const logo = createLogoCube();
@@ -62,6 +63,10 @@ function mountLogo(host) {
   let lastTime = 0;
   let transformed = false;
   let transitioning = false;
+  let transition = null;
+  let timeline = 0;
+  let direction = 1;
+  let transitionTime = 0;
 
   function resize() {
     const { width, height } = host.getBoundingClientRect();
@@ -69,6 +74,7 @@ function mountLogo(host) {
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    if (transition) { transition.layout(); transition.update(timeline); }
     renderer.render(scene, camera);
   }
   const resizeObserver = new ResizeObserver(resize);
@@ -96,7 +102,18 @@ function mountLogo(host) {
     frame = requestAnimationFrame(render);
   }
   function resume() {
-    if (transitioning) return;
+    if (transitioning) {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      transitionTime = 0;
+      if (motion.matches) {
+        timeline = direction > 0 ? TRANSITION_DURATION : 0;
+        transition.update(timeline);
+        renderer.render(scene, camera);
+        finishTransition();
+      } else if (visible && !document.hidden) frame = requestAnimationFrame(animateTransition);
+      return;
+    }
     if (frame) cancelAnimationFrame(frame);
     frame = 0;
     lastTime = 0;
@@ -108,57 +125,56 @@ function mountLogo(host) {
       renderer.render(scene, camera);
     } else if (visible && !document.hidden) frame = requestAnimationFrame(render);
   }
-  function revealName() {
-    if (transitioning || !visible) return;
-    if (transformed) { revealCube(); return; }
-    transformed = true;
-    transitioning = !motion.matches;
-    if (frame) cancelAnimationFrame(frame);
+  function finishTransition() {
     frame = 0;
-    host.classList.add('is_wordmark');
-    host.setAttribute('aria-label', 'Clique para voltar à logo 3D da Dev Point Studio');
-    if (!motion.matches) {
-      // Rotação e recolhimento em 3D, sincronizados com a entrada das palavras.
-      const started = performance.now();
-      function collapse(now) {
-        const progress = Math.min((now - started) / 900, 1);
-        const eased = progress * progress * (3 - 2 * progress);
-        spinPivot.rotation.y = eased * Math.PI * 1.5;
-        spinPivot.rotation.z = eased * -0.35;
-        spinPivot.scale.setScalar(Math.max(0.001, 1 - eased));
-        renderer.render(scene, camera);
-        if (progress < 1) frame = requestAnimationFrame(collapse);
-        else frame = 0;
-      }
-      frame = requestAnimationFrame(collapse);
-      setTimeout(() => { transitioning = false; }, 1750);
+    transitioning = false;
+    host.removeAttribute('aria-busy');
+    if (direction < 0) {
+      transition.restore();
+      transition = null;
+      transformed = false;
+      host.classList.remove('is_wordmark');
+      host.setAttribute('aria-label', 'Clique para revelar o nome Dev Point Studio');
+      resume();
+    } else {
+      transformed = true;
+      host.setAttribute('aria-label', 'Clique para remontar o cubo da Dev Point Studio');
     }
   }
-  function revealCube() {
+
+  function animateTransition(time) {
+    frame = 0;
+    if (document.hidden || !visible) { transitionTime = 0; return; }
+    const dt = transitionTime ? Math.min(time - transitionTime, 64) : 0;
+    transitionTime = time;
+    timeline = Math.max(0, Math.min(TRANSITION_DURATION, timeline + dt * direction));
+    transition.update(timeline);
+    renderer.render(scene, camera);
+    if ((direction > 0 && timeline >= TRANSITION_DURATION) || (direction < 0 && timeline <= 0)) {
+      finishTransition();
+    } else frame = requestAnimationFrame(animateTransition);
+  }
+
+  function revealName() {
+    if (transitioning || !visible) return;
+    if (frame) cancelAnimationFrame(frame);
+    frame = 0;
+    direction = transformed ? -1 : 1;
+    if (!transition) {
+      transition = createLogoTransition(logo, camera, host);
+      transition.layout();
+      timeline = 0;
+    }
+    host.classList.add('is_wordmark');
+    host.setAttribute('aria-busy', 'true');
     transitioning = true;
-    host.classList.add('is_returning');
-    const started = performance.now();
-    function finish() {
-      spinPivot.rotation.set(0, 0, 0);
-      spinPivot.scale.setScalar(1);
-      host.classList.remove('is_wordmark', 'is_returning');
-      host.setAttribute('aria-label', 'Clique para revelar o nome Dev Point Studio');
-      transformed = false;
-      transitioning = false;
-      resume();
-    }
-    if (motion.matches) { finish(); return; }
-    function expand(now) {
-      const progress = Math.min(Math.max((now - started - 300) / 900, 0), 1);
-      const eased = progress * progress * (3 - 2 * progress);
-      spinPivot.rotation.y = (1 - eased) * -Math.PI * 1.5;
-      spinPivot.rotation.z = (1 - eased) * 0.35;
-      spinPivot.scale.setScalar(Math.max(0.001, eased));
+    transitionTime = 0;
+    if (motion.matches) {
+      timeline = direction > 0 ? TRANSITION_DURATION : 0;
+      transition.update(timeline);
       renderer.render(scene, camera);
-      if (progress < 1) frame = requestAnimationFrame(expand);
-      else { frame = 0; finish(); }
-    }
-    frame = requestAnimationFrame(expand);
+      finishTransition();
+    } else frame = requestAnimationFrame(animateTransition);
   }
   host.setAttribute('role', 'button');
   host.setAttribute('tabindex', '0');
@@ -178,7 +194,11 @@ function mountLogo(host) {
     event.preventDefault();
     visible = false;
     resume();
-    host.classList.remove('is_ready');
+    if (frame) cancelAnimationFrame(frame);
+    frame = 0;
+    transitioning = false;
+    host.removeAttribute('aria-busy');
+    host.classList.remove('is_ready', 'is_wordmark');
     renderer.domElement.style.display = 'none';
   });
   resume();
